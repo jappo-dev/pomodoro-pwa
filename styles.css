@@ -8,7 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: #333; /* Dark text for readability */
+    color: #333;
 }
 
 .container {
@@ -18,14 +18,15 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     padding: 40px;
     width: 300px;
-    max-width: 90%; /* Makes the app responsive on mobile */
+    max-width: 90%;
+    transition: width 0.3s ease-in-out;
 }
 
 /* Header Styling */
 .title {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #007bff; /* Soothing blue for the title */
+    color: #007bff;
     font-weight: 600;
 }
 
@@ -33,7 +34,7 @@ body {
 .timer-display {
     font-size: 3em;
     margin: 20px 0;
-    color: #28a745; /* Green for timer for positivity */
+    color: #28a745;
     font-weight: bold;
     transition: transform 0.3s ease-in-out;
 }
@@ -49,7 +50,7 @@ body {
 
 .timer-controls label {
     font-size: 1.1em;
-    color: #555; /* Subtle grey for labels */
+    color: #555;
     display: block;
     margin-bottom: 10px;
     text-align: left;
@@ -63,40 +64,40 @@ body {
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f8f9fa; /* Light background for inputs */
+    background-color: #f8f9fa;
     transition: border-color 0.3s ease-in-out;
 }
 
 .timer-controls input:focus {
-    border-color: #007bff; /* Highlight inputs with blue when focused */
-    outline: none; /* Remove default outline */
+    border-color: #007bff;
+    outline: none;
 }
 
 /* Button Styling */
 button {
-    padding: 10px 20px;
-    font-size: 1.1em;
+    padding: 12px 24px;
+    font-size: 1.2em;
     margin: 10px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    background-color: #28a745; /* Green for the active timer */
+    border-radius: 8px;
+    background-color: #28a745;
     color: white;
     transition: background-color 0.3s, transform 0.3s ease-in-out;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #218838; /* Darker green for hover */
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    background-color: #218838;
+    transform: scale(1.05);
 }
 
 button:active {
-    transform: scale(1); /* Return to original size on click */
+    transform: scale(1);
 }
 
 button:focus {
-    outline: 2px solid #0056b3; /* Focus state with a blue outline for better accessibility */
+    outline: 2px solid #0056b3;
     outline-offset: 4px;
 }
 
@@ -126,31 +127,45 @@ button:focus {
     line-height: 1.5;
 }
 
-/* Media Queries for Mobile Responsiveness */
+/* Mobile-Friendly Adjustments */
 @media (max-width: 600px) {
     .container {
-        width: 80%;
+        width: 90%;
         padding: 20px;
     }
 
     .title {
-        font-size: 2em;
+        font-size: 2.2em; /* Slightly smaller title for mobile */
     }
 
     .timer-display {
         font-size: 2.5em;
     }
 
-    button {
-        width: 100%;
+    .timer-controls input {
+        width: 60px; /* Slightly bigger input fields for touch */
+        font-size: 1.5em; /* Increase font size for better readability */
         padding: 12px;
     }
 
-    .timer-controls {
-        font-size: 1em;
+    button {
+        width: 100%; /* Full-width buttons for easy tapping */
+        padding: 15px;
+        font-size: 1.3em;
     }
 
     .session-display p {
-        font-size: 1em;
+        font-size: 1.1em;
+    }
+
+    /* Make the progress bar taller on mobile for better visibility */
+    .progress-bar-container {
+        height: 12px;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: #28a745;
+        transition: width 1s linear;
     }
 }
