@@ -1,49 +1,35 @@
 // Variables for Timer
 let timer;
 let isRunning = false;
-let isWorkSession = true;
-let workDuration = 25; // Default work duration (in minutes)
-let breakDuration = 5; // Default break duration (in minutes)
-let currentTime = workDuration * 60; // in seconds
-let sessionsCompleted = localStorage.getItem("sessionsCompleted") || 0;
-let timerEndSound = document.getElementById("endSound");
-let taskInput = document.getElementById("task-input");
-let quoteBtn = document.getElementById("quoteBtn");
+let currentTime = 25 * 60; // Initial work time in seconds
+let workDuration = 25; // Default work duration
+let breakDuration = 5; // Default break duration
+let sessionsCompleted = 0; // Track completed Pomodoro sessions
+let isWorkSession = true; // Track if it's a work or break session
 
 // Select DOM Elements
 const timerDisplay = document.getElementById("timer");
 const startPauseBtn = document.getElementById("startPauseBtn");
-const darkModeBtn = document.getElementById("darkModeBtn");
-const progressBar = document.getElementById("progress-bar");
 const sessionInfo = document.getElementById("session-info");
+const progressBar = document.getElementById("progress-bar");
+const workDurationSlider = document.getElementById('work-duration');
+const breakDurationSlider = document.getElementById('break-duration');
+const workDurationDisplay = document.getElementById('work-duration-display');
+const breakDurationDisplay = document.getElementById('break-duration-display');
+const endSound = document.getElementById("endSound");
+const darkModeBtn = document.getElementById("darkModeBtn");
 
 // Event Listeners
 startPauseBtn.addEventListener("click", toggleTimer);
+workDurationSlider.addEventListener("input", updateWorkDuration);
+breakDurationSlider.addEventListener("input", updateBreakDuration);
 darkModeBtn.addEventListener("click", toggleDarkMode);
-quoteBtn.addEventListener("click", showMotivationalQuote);
 
-// Toggle Dark Mode
-function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-    document.querySelector(".container").classList.toggle("dark-mode");
-}
-
-// Show Motivational Quote
-function showMotivationalQuote() {
-    const quotes = [
-        "Success is the sum of small efforts, repeated day in and day out.",
-        "The way to get started is to quit talking and begin doing.",
-        "Don’t watch the clock; do what it does. Keep going."
-    ];
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    alert(randomQuote);
-}
-
-// Start or Pause Timer
+// Toggle Timer
 function toggleTimer() {
     if (isRunning) {
         clearInterval(timer);
-        startPauseBtn.textContent = "Resume";
+        startPauseBtn.textContent = "Start";
     } else {
         timer = setInterval(updateTime, 1000);
         startPauseBtn.textContent = "Pause";
@@ -51,10 +37,27 @@ function toggleTimer() {
     isRunning = !isRunning;
 }
 
+// Update Work Duration
+function updateWorkDuration() {
+    workDuration = parseInt(workDurationSlider.value);
+    workDurationDisplay.textContent = workDuration;
+    if (!isRunning) {
+        currentTime = workDuration * 60;
+        updateDisplay();
+    }
+}
+
+// Update Break Duration
+function updateBreakDuration() {
+    breakDuration = parseInt(breakDurationSlider.value);
+    breakDurationDisplay.textContent = breakDuration;
+}
+
 // Update Timer
 function updateTime() {
     currentTime--;
     updateDisplay();
+    updateProgressBar();
 
     if (currentTime <= 0) {
         handleSessionEnd();
@@ -66,17 +69,18 @@ function updateDisplay() {
     let minutes = Math.floor(currentTime / 60);
     let seconds = currentTime % 60;
     timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-    // Update progress bar
-    let progress = (1 - currentTime / (isWorkSession ? workDuration : breakDuration) / 60) * 100;
-    progressBar.style.width = `${progress}%`;
 }
 
-// Handle Session End
+// Update Progress Bar
+function updateProgressBar() {
+    const progress = (1 - (currentTime / (isWorkSession ? workDuration : breakDuration) / 60)) * 100;
+    progressBar.style.width = progress + "%";
+}
+
+// Handle Session End (Work or Break)
 function handleSessionEnd() {
-    timerEndSound.play();
+    endSound.play();
     sessionsCompleted++;
-    localStorage.setItem("sessionsCompleted", sessionsCompleted);
     sessionInfo.textContent = `Sessions Completed: ${sessionsCompleted}`;
 
     if (isWorkSession) {
@@ -92,12 +96,7 @@ function handleSessionEnd() {
     isRunning = false;
 }
 
-// Set Custom Timer Durations
-document.getElementById("work-duration").addEventListener("input", (e) => {
-    workDuration = parseInt(e.target.value, 10);
-    currentTime = workDuration * 60;
-});
-
-document.getElementById("break-duration").addEventListener("input", (e) => {
-    breakDuration = parseInt(e.target.value, 10);
-});
+// Toggle Dark Mode
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}

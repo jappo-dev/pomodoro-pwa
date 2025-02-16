@@ -12,7 +12,7 @@
 
         <!-- Task Input Section -->
         <label for="task-input">What task are you working on?</label>
-        <input type="text" id="task-input" placeholder="Enter your task here">
+        <input type="text" id="task-input" placeholder="Enter your task here" aria-label="Task input">
 
         <!-- Timer Display -->
         <div id="timer" class="timer-display">25:00</div>
@@ -20,24 +20,27 @@
         <!-- Timer Controls -->
         <div class="timer-controls">
             <label for="work-duration">Pomodoro Duration (Minutes):</label>
-            <input type="number" id="work-duration" value="25" min="1" max="60">
+            <input type="range" id="work-duration" min="5" max="60" value="25" class="timer-slider">
+            <span id="work-duration-display">25</span> min
+
             <label for="break-duration">Break Duration (Minutes):</label>
-            <input type="number" id="break-duration" value="5" min="1" max="30">
+            <input type="range" id="break-duration" min="1" max="30" value="5" class="timer-slider">
+            <span id="break-duration-display">5</span> min
         </div>
 
         <!-- Start/Pause Button -->
-        <button id="startPauseBtn">Start</button>
+        <button id="startPauseBtn" aria-label="Start/Pause Timer">Start</button>
 
         <!-- Session Display -->
         <div class="session-display">
-            <p id="session-info">Session: 0</p>
+            <p id="session-info">Sessions Completed: 0</p>
         </div>
 
         <!-- Dark Mode Toggle Button -->
-        <button id="darkModeBtn">Toggle Dark Mode</button>
+        <button id="darkModeBtn" aria-label="Toggle Dark Mode">Toggle Dark Mode</button>
 
         <!-- Motivational Quote Button -->
-        <button id="quoteBtn">Show Motivational Quote</button>
+        <button id="quoteBtn" aria-label="Show Motivational Quote">Show Quote</button>
 
         <!-- Progress Bar -->
         <div class="progress-bar-container">
@@ -45,7 +48,7 @@
         </div>
 
         <!-- Sound Notification -->
-        <audio id="endSound" src="timer-end-sound.mp3"></audio>
+        <audio id="endSound" src="timer-end-sound.mp3" preload="auto"></audio>
     </div>
 
     <script src="script.js"></script>
