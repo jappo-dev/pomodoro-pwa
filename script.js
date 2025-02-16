@@ -55,6 +55,10 @@ function updateBreakDuration() {
     breakDuration = parseInt(breakDurationSlider.value);
     breakDurationDisplay.textContent = breakDuration;
     breakDurationSlider.setAttribute('aria-valuenow', breakDuration);
+    if (!isRunning && !isWorkSession) {
+        currentTime = breakDuration * 60;
+        updateDisplay();
+    }
 }
 
 // Update Timer
