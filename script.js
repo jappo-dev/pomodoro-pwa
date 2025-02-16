@@ -30,9 +30,11 @@ function toggleTimer() {
     if (isRunning) {
         clearInterval(timer);
         startPauseBtn.textContent = "Start";
+        startPauseBtn.setAttribute('aria-label', 'Start Timer');
     } else {
         timer = setInterval(updateTime, 1000);
         startPauseBtn.textContent = "Pause";
+        startPauseBtn.setAttribute('aria-label', 'Pause Timer');
     }
     isRunning = !isRunning;
 }
@@ -41,6 +43,7 @@ function toggleTimer() {
 function updateWorkDuration() {
     workDuration = parseInt(workDurationSlider.value);
     workDurationDisplay.textContent = workDuration;
+    workDurationSlider.setAttribute('aria-valuenow', workDuration);
     if (!isRunning) {
         currentTime = workDuration * 60;
         updateDisplay();
@@ -51,6 +54,7 @@ function updateWorkDuration() {
 function updateBreakDuration() {
     breakDuration = parseInt(breakDurationSlider.value);
     breakDurationDisplay.textContent = breakDuration;
+    breakDurationSlider.setAttribute('aria-valuenow', breakDuration);
 }
 
 // Update Timer
@@ -75,6 +79,7 @@ function updateDisplay() {
 function updateProgressBar() {
     const progress = (1 - (currentTime / (isWorkSession ? workDuration : breakDuration) / 60)) * 100;
     progressBar.style.width = progress + "%";
+    progressBar.setAttribute('aria-valuenow', progress);
 }
 
 // Handle Session End (Work or Break)
@@ -93,10 +98,12 @@ function handleSessionEnd() {
     isWorkSession = !isWorkSession;
     clearInterval(timer);
     startPauseBtn.textContent = "Start";
+    startPauseBtn.setAttribute('aria-label', 'Start Timer');
     isRunning = false;
 }
 
 // Toggle Dark Mode
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
+    darkModeBtn.setAttribute('aria-label', document.body.classList.contains("dark-mode") ? 'Switch to Light Mode' : 'Switch to Dark Mode');
 }

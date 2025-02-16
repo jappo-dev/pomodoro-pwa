@@ -8,23 +8,19 @@
 </head>
 <body>
     <div class="container">
-        <div class="title">Pomodoro Timer</div>
-
-        <!-- Task Input Section -->
-        <label for="task-input">What task are you working on?</label>
-        <input type="text" id="task-input" placeholder="Enter your task here" aria-label="Task input">
+        <div class="title" role="heading" aria-level="1">Pomodoro Timer</div>
 
         <!-- Timer Display -->
-        <div id="timer" class="timer-display">25:00</div>
+        <div id="timer" class="timer-display" aria-live="polite">25:00</div>
 
         <!-- Timer Controls -->
         <div class="timer-controls">
-            <label for="work-duration">Pomodoro Duration (Minutes):</label>
-            <input type="range" id="work-duration" min="5" max="60" value="25" class="timer-slider">
+            <label for="work-duration" aria-label="Pomodoro Duration (Minutes)">Pomodoro Duration (Minutes):</label>
+            <input type="range" id="work-duration" min="5" max="60" value="25" class="timer-slider" aria-valuenow="25" aria-valuemin="5" aria-valuemax="60" aria-labelledby="work-duration">
             <span id="work-duration-display">25</span> min
 
-            <label for="break-duration">Break Duration (Minutes):</label>
-            <input type="range" id="break-duration" min="1" max="30" value="5" class="timer-slider">
+            <label for="break-duration" aria-label="Break Duration (Minutes)">Break Duration (Minutes):</label>
+            <input type="range" id="break-duration" min="1" max="30" value="5" class="timer-slider" aria-valuenow="5" aria-valuemin="1" aria-valuemax="30" aria-labelledby="break-duration">
             <span id="break-duration-display">5</span> min
         </div>
 
@@ -32,7 +28,7 @@
         <button id="startPauseBtn" aria-label="Start/Pause Timer">Start</button>
 
         <!-- Session Display -->
-        <div class="session-display">
+        <div class="session-display" role="status">
             <p id="session-info">Sessions Completed: 0</p>
         </div>
 
@@ -44,11 +40,11 @@
 
         <!-- Progress Bar -->
         <div class="progress-bar-container">
-            <div id="progress-bar" class="progress-bar"></div>
+            <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
         </div>
 
         <!-- Sound Notification -->
-        <audio id="endSound" src="timer-end-sound.mp3" preload="auto"></audio>
+        <audio id="endSound" src="timer-end-sound.mp3" preload="auto" aria-hidden="true"></audio>
     </div>
 
     <script src="script.js"></script>
