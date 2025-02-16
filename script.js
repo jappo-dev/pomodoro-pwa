@@ -1,92 +1,103 @@
-let sessionTime = 25; // Session time in minutes
-let breakTime = 5; // Break time in minutes
-let isSession = true; // Start with a session
-let timerInterval;
-let timeRemaining;
-let progressInterval;
+// Variables for Timer
+let timer;
+let isRunning = false;
+let isWorkSession = true;
+let workDuration = 25; // Default work duration (in minutes)
+let breakDuration = 5; // Default break duration (in minutes)
+let currentTime = workDuration * 60; // in seconds
+let sessionsCompleted = localStorage.getItem("sessionsCompleted") || 0;
+let timerEndSound = document.getElementById("endSound");
+let taskInput = document.getElementById("task-input");
+let quoteBtn = document.getElementById("quoteBtn");
 
-const startBtn = document.querySelector('.start-btn');
-const resetBtn = document.querySelector('.reset-btn');
-const timerDisplay = document.querySelector('.timer-display');
-const sessionTimeDisplay = document.querySelector('.session-time');
-const breakTimeDisplay = document.querySelector('.break-time');
-const progressBar = document.querySelector('.progress-bar');
+// Select DOM Elements
+const timerDisplay = document.getElementById("timer");
+const startPauseBtn = document.getElementById("startPauseBtn");
+const darkModeBtn = document.getElementById("darkModeBtn");
+const progressBar = document.getElementById("progress-bar");
+const sessionInfo = document.getElementById("session-info");
 
-const sessionEndSound = new Audio('session-end.mp3');
-const breakEndSound = new Audio('break-end.mp3');
+// Event Listeners
+startPauseBtn.addEventListener("click", toggleTimer);
+darkModeBtn.addEventListener("click", toggleDarkMode);
+quoteBtn.addEventListener("click", showMotivationalQuote);
 
-startBtn.addEventListener('click', startTimer);
-resetBtn.addEventListener('click', resetTimer);
-
-function startTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        clearInterval(progressInterval);
-    }
-
-    // Get session and break times from input fields
-    sessionTime = parseInt(document.querySelector('.session-length').value);
-    breakTime = parseInt(document.querySelector('.break-length').value);
-
-    timeRemaining = isSession ? sessionTime * 60 : breakTime * 60;
-
-    updateTimerDisplay();
-    startCountdown();
+// Toggle Dark Mode
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+    document.querySelector(".container").classList.toggle("dark-mode");
 }
 
-function startCountdown() {
-    timerInterval = setInterval(() => {
-        timeRemaining--;
-        updateTimerDisplay();
-
-        if (timeRemaining <= 0) {
-            clearInterval(timerInterval);
-            switchSession();
-        }
-
-    }, 1000);
-
-    // Start the progress bar animation
-    progressBar.style.transition = `width ${timeRemaining}s linear`;
-    progressBar.style.width = '100%';
-
-    // Update progress bar continuously
-    progressInterval = setInterval(() => {
-        let percentage = (1 - timeRemaining / (isSession ? sessionTime * 60 : breakTime * 60)) * 100;
-        progressBar.style.width = `${percentage}%`;
-    }, 1000);
+// Show Motivational Quote
+function showMotivationalQuote() {
+    const quotes = [
+        "Success is the sum of small efforts, repeated day in and day out.",
+        "The way to get started is to quit talking and begin doing.",
+        "Don’t watch the clock; do what it does. Keep going."
+    ];
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    alert(randomQuote);
 }
 
-function updateTimerDisplay() {
-    let minutes = Math.floor(timeRemaining / 60);
-    let seconds = timeRemaining % 60;
-    timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
-
-function switchSession() {
-    if (isSession) {
-        // Switch to break
-        isSession = false;
-        timeRemaining = breakTime * 60;
-        breakEndSound.play();  // Play break sound
-        alert("Take a break!");
+// Start or Pause Timer
+function toggleTimer() {
+    if (isRunning) {
+        clearInterval(timer);
+        startPauseBtn.textContent = "Resume";
     } else {
-        // Switch to work session
-        isSession = true;
-        timeRemaining = sessionTime * 60;
-        sessionEndSound.play();  // Play session end sound
-        alert("Back to work!");
+        timer = setInterval(updateTime, 1000);
+        startPauseBtn.textContent = "Pause";
     }
-    startTimer();
+    isRunning = !isRunning;
 }
 
-function resetTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        clearInterval(progressInterval);
+// Update Timer
+function updateTime() {
+    currentTime--;
+    updateDisplay();
+
+    if (currentTime <= 0) {
+        handleSessionEnd();
     }
-    isSession = true;
-    timeRemaining = sessionTime * 60;
-    updateTimerDisplay();
-    progressBar.style.width = '0%';
 }
+
+// Update Timer Display
+function updateDisplay() {
+    let minutes = Math.floor(currentTime / 60);
+    let seconds = currentTime % 60;
+    timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    // Update progress bar
+    let progress = (1 - currentTime / (isWorkSession ? workDuration : breakDuration) / 60) * 100;
+    progressBar.style.width = `${progress}%`;
+}
+
+// Handle Session End
+function handleSessionEnd() {
+    timerEndSound.play();
+    sessionsCompleted++;
+    localStorage.setItem("sessionsCompleted", sessionsCompleted);
+    sessionInfo.textContent = `Sessions Completed: ${sessionsCompleted}`;
+
+    if (isWorkSession) {
+        currentTime = breakDuration * 60; // Set to break time
+        alert("Pomodoro session is complete! Time for a break.");
+    } else {
+        currentTime = workDuration * 60; // Set to work time
+        alert("Break is over! Time to get back to work.");
+    }
+    isWorkSession = !isWorkSession;
+    clearInterval(timer);
+    startPauseBtn.textContent = "Start";
+    isRunning = false;
+}
+
+// Set Custom Timer Durations
+document.getElementById("work-duration").addEventListener("input", (e) => {
+    workDuration = parseInt(e.target.value, 10);
+    currentTime = workDuration * 60;
+});
+
+document.getElementById("break-duration").addEventListener("input", (e) => {
+    breakDuration = parseInt(e.target.value, 10);
+});

@@ -22,6 +22,16 @@ body {
     transition: width 0.3s ease-in-out;
 }
 
+/* Dark Mode */
+body.dark-mode {
+    background-color: #333;
+    color: white;
+}
+
+.container.dark-mode {
+    background-color: #444;
+}
+
 /* Header Styling */
 .title {
     font-size: 2.5em;
@@ -40,7 +50,7 @@ body {
 }
 
 .timer-display:active {
-    transform: scale(1.1); /* Slight zoom effect when the timer is clicked */
+    transform: scale(1.1);
 }
 
 /* Timer Controls */
@@ -116,17 +126,6 @@ button:focus {
     transition: width 1s linear;
 }
 
-/* Session/Break Time Information */
-.session-display {
-    margin-top: 20px;
-    font-size: 1.1em;
-    color: #555;
-}
-
-.session-display p {
-    line-height: 1.5;
-}
-
 /* Mobile-Friendly Adjustments */
 @media (max-width: 600px) {
     .container {
@@ -135,7 +134,7 @@ button:focus {
     }
 
     .title {
-        font-size: 2.2em; /* Slightly smaller title for mobile */
+        font-size: 2.2em;
     }
 
     .timer-display {
@@ -143,13 +142,13 @@ button:focus {
     }
 
     .timer-controls input {
-        width: 60px; /* Slightly bigger input fields for touch */
-        font-size: 1.5em; /* Increase font size for better readability */
+        width: 60px;
+        font-size: 1.5em;
         padding: 12px;
     }
 
     button {
-        width: 100%; /* Full-width buttons for easy tapping */
+        width: 100%;
         padding: 15px;
         font-size: 1.3em;
     }
@@ -158,14 +157,11 @@ button:focus {
         font-size: 1.1em;
     }
 
-    /* Make the progress bar taller on mobile for better visibility */
     .progress-bar-container {
         height: 12px;
     }
 
     .progress-bar {
         height: 100%;
-        background-color: #28a745;
-        transition: width 1s linear;
     }
 }

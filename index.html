@@ -3,39 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta description="Pomodoro Timer App">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png">
     <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Pomodoro Timer</h1>
-        <div class="timer-display">25:00</div>
+        <div class="title">Pomodoro Timer</div>
 
-        <!-- Timer Customization Section -->
+        <!-- Task Input Section -->
+        <label for="task-input">What task are you working on?</label>
+        <input type="text" id="task-input" placeholder="Enter your task here">
+
+        <!-- Timer Display -->
+        <div id="timer" class="timer-display">25:00</div>
+
+        <!-- Timer Controls -->
         <div class="timer-controls">
-            <label for="session-length">Session Time (min):</label>
-            <input type="number" class="session-length" value="25" min="1" max="60">
-
-            <label for="break-length">Break Time (min):</label>
-            <input type="number" class="break-length" value="5" min="1" max="30">
+            <label for="work-duration">Pomodoro Duration (Minutes):</label>
+            <input type="number" id="work-duration" value="25" min="1" max="60">
+            <label for="break-duration">Break Duration (Minutes):</label>
+            <input type="number" id="break-duration" value="5" min="1" max="30">
         </div>
 
-        <button class="start-btn">Start</button>
-        <button class="reset-btn">Reset</button>
+        <!-- Start/Pause Button -->
+        <button id="startPauseBtn">Start</button>
 
-        <!-- Session & Break Time Display -->
+        <!-- Session Display -->
         <div class="session-display">
-            <p>Session Time: <span class="session-time">25</span> min</p>
-            <p>Break Time: <span class="break-time">5</span> min</p>
+            <p id="session-info">Session: 0</p>
         </div>
+
+        <!-- Dark Mode Toggle Button -->
+        <button id="darkModeBtn">Toggle Dark Mode</button>
+
+        <!-- Motivational Quote Button -->
+        <button id="quoteBtn">Show Motivational Quote</button>
 
         <!-- Progress Bar -->
         <div class="progress-bar-container">
-            <div class="progress-bar"></div>
+            <div id="progress-bar" class="progress-bar"></div>
         </div>
+
+        <!-- Sound Notification -->
+        <audio id="endSound" src="timer-end-sound.mp3"></audio>
     </div>
 
     <script src="script.js"></script>
