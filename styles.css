@@ -1,39 +1,45 @@
 /* General Layout */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Arial', sans-serif;
+    background-color: #fafafa;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #333; /* Dark text for readability */
 }
 
 .container {
     text-align: center;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     padding: 40px;
     width: 300px;
+    max-width: 90%; /* Makes the app responsive on mobile */
 }
 
+/* Header Styling */
 .title {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #333;
+    color: #007bff; /* Soothing blue for the title */
+    font-weight: 600;
 }
 
 /* Timer Display */
 .timer-display {
     font-size: 3em;
     margin: 20px 0;
+    color: #28a745; /* Green for timer for positivity */
+    font-weight: bold;
     transition: transform 0.3s ease-in-out;
 }
 
 .timer-display:active {
-    transform: scale(1.1); /* Slight zoom effect */
+    transform: scale(1.1); /* Slight zoom effect when the timer is clicked */
 }
 
 /* Timer Controls */
@@ -41,34 +47,57 @@ body {
     margin: 20px 0;
 }
 
-.timer-controls input {
-    width: 50px;
-    padding: 5px;
-    font-size: 1em;
-    margin: 0 10px;
-    text-align: center;
+.timer-controls label {
+    font-size: 1.1em;
+    color: #555; /* Subtle grey for labels */
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
 }
 
-/* Buttons */
+.timer-controls input {
+    width: 50px;
+    padding: 8px;
+    font-size: 1.2em;
+    margin: 0 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa; /* Light background for inputs */
+    transition: border-color 0.3s ease-in-out;
+}
+
+.timer-controls input:focus {
+    border-color: #007bff; /* Highlight inputs with blue when focused */
+    outline: none; /* Remove default outline */
+}
+
+/* Button Styling */
 button {
     padding: 10px 20px;
-    font-size: 1em;
+    font-size: 1.1em;
     margin: 10px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #28a745;
+    background-color: #28a745; /* Green for the active timer */
     color: white;
     transition: background-color 0.3s, transform 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #218838;
-    transform: scale(1.05); /* Zoom effect */
+    background-color: #218838; /* Darker green for hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
 button:active {
     transform: scale(1); /* Return to original size on click */
+}
+
+button:focus {
+    outline: 2px solid #0056b3; /* Focus state with a blue outline for better accessibility */
+    outline-offset: 4px;
 }
 
 /* Progress Bar */
@@ -91,4 +120,37 @@ button:active {
     margin-top: 20px;
     font-size: 1.1em;
     color: #555;
+}
+
+.session-display p {
+    line-height: 1.5;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 2em;
+    }
+
+    .timer-display {
+        font-size: 2.5em;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .timer-controls {
+        font-size: 1em;
+    }
+
+    .session-display p {
+        font-size: 1em;
+    }
 }
