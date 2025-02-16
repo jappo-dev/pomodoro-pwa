@@ -1,0 +1,94 @@
+/* General Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 300px;
+}
+
+.title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Timer Display */
+.timer-display {
+    font-size: 3em;
+    margin: 20px 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.timer-display:active {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Timer Controls */
+.timer-controls {
+    margin: 20px 0;
+}
+
+.timer-controls input {
+    width: 50px;
+    padding: 5px;
+    font-size: 1em;
+    margin: 0 10px;
+    text-align: center;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #218838;
+    transform: scale(1.05); /* Zoom effect */
+}
+
+button:active {
+    transform: scale(1); /* Return to original size on click */
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #28a745;
+    transition: width 1s linear;
+}
+
+/* Session/Break Time Information */
+.session-display {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #555;
+}
